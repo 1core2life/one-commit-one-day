@@ -18,12 +18,19 @@ LAST_COUNT = 0
 def main():
     return render_template("main.html")
 
+@app.route("/total", methods=['POST'])
+def get_total_fine():
+    return jsonify({'total_fine':total_fine*1000})
+
+
 @app.route("/users", methods=['POST'])
 def get_user_list():
     last_saturday =  get_last_saturday(LAST_COUNT)
     last_last_saturday =  get_last_saturday(LAST_COUNT + 1)
 
     users = read_user_list()
+    global total_fine
+    total_fine = 0
     for user in users:
         url = "https://github.com/" + user["id"]
         res = requests.get(url)
@@ -60,7 +67,8 @@ def get_user_list():
 
                 commit = commit + date_commit
                 
-    
+        total_fine = total_fine + fine
+ 
         user["commit"] = commit
         user["consecutive_date"] = consecutive
         user["fine"] = fine

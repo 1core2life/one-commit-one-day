@@ -27,7 +27,7 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-5">
-                            <h2>잔디밭 대시보드(2021)</h2>
+                            <h2>디닷컴 잔디밭 대시보드(2021)</h2>
                         </div>
                         <div class="col-sm-7">
                             <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>아이디 신규 등록</span></a>
@@ -36,26 +36,39 @@
                     </div>
                 </div>
                 <br>
-                <h2>
-                    운영 세칙
-                </h2>
-                <br>
-                <p>
-                    1. 개인 계정에 1일 1커밋을 목표로 합니다.
-                </p>
-                <p>
-                    2. 개인 프로젝트/알고리즘/블로깅 등 어떤 커밋이든지 상관 없습니다.
-                </p>
-                <p>
-                    3. 매주 일요일마다 집계 (일-토 기준), 커밋 한번 빠졌을 때마다 벌금 1,000원 입니다.
-                </p>
-                <p>
-                    4. 귀찮아서/경조사/여행 기타 등등 사유 상관없이 빠지면 벌금 내세요. 일일이 확인이 귀찮습니다!
-                </p>
-                <p>
-                    * 성실도 (커밋수 대비 전체일수) 0 < F < 60% < D < 70% < C < 80% < B < 90% < A 
-                </p>
-                <br>
+                <div class="container">
+                    <h2>
+                        운영 세칙
+                    </h2>
+                    <br>
+                    <p>
+                        1. 개인 계정에 1일 1커밋을 목표로 합니다.
+                    </p>
+                    <p>
+                        2. 개인 프로젝트/알고리즘/블로깅 등 어떤 커밋이든지 상관 없습니다.
+                    </p>
+                    <p>
+                        3. 커밋은 절대 강요하거나 눈치주지 않습니다. 오직 벌금만 강요합니다!
+                    </p>
+                    <p>
+                        4. 매주 일요일마다 집계 (일-토 기준), 커밋 한번 빠졌을 때마다 벌금 1,000원 입니다.
+                    </p>
+                    <p>
+                        5. 귀찮아서/경조사/여행 기타 등등 사유 상관없이 빠지면 벌금입니다. 그냥 맘편하게 내세요!
+                    </p>
+                    <br>
+
+                    <p>
+                        * 성실도 (커밋수 대비 전체일수) 0 < F < 60% < D < 70% < C < 80% < B < 90% < A 
+                    </p>
+                    <br>
+
+                
+                    <h2>총 벌금 
+                        <h4 id="total"> -원</h4>
+                    </h2>
+                    <br>
+                </div>
 
                 <div class="lds-roller" id="loading"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                 
@@ -66,7 +79,7 @@
                             <th>프로필</th>						
                             <th>참여 날짜</th>
                             <th>커밋수</th>
-                            <th>연속 커밋 날짜</th>
+                            <th>최근 연속 커밋</th>
                             <th>총 벌금(+이번주)</th>
                             <th>성실도</th>
                         </tr>
@@ -84,7 +97,15 @@
             url: '/users',
             success: function(res){
                 $("#users").html(res);
-                $("#loading").html("");
+                $.ajax({
+                    type: 'POST',
+                    url: '/total',
+                    success: function(res){
+                        console.log(res);
+                        $("#total").html(res["total_fine"].toLocaleString('en-US') + "원");
+                        $("#loading").html("");
+                    }
+                });
             }
         });
     </script> 
