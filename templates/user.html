@@ -1,0 +1,12 @@
+
+{% for user in result%}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td><a href="https://github.com/{{ user['id'] }}"><img src="{{ user['profile'] }}" class="avatar" alt="Avatar" height="50px" width="50px"> {{ user['name'] }}</a></td>
+        <td>{{ user['start_date'] }}</td>                        
+        <td>{{ user['commit'] }}</td>
+        <td>{{ user['consecutive_date'] }}</td>
+        <td>{{ user['fine'] * 1000 | int }} (+{{ user['new_fine'] * 1000 | int }})</td>
+        <td><span class="status {{  'text-' ~user['state']}}">&bull;</span> {{ user['state_text'] }}</td>
+    </tr>
+{% endfor %}
